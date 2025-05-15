@@ -1,6 +1,3 @@
-output "private_endpoints" {
-  description = <<DESCRIPTION
-  A map of the private endpoints created.
-  DESCRIPTION
-  value       = var.private_endpoints_manage_dns_zone_group ? azurerm_private_endpoint.this_managed_dns_zone_groups : azurerm_private_endpoint.this_unmanaged_dns_zone_groups
+output "update_commands" {
+  value = "az webapp deploy -g '${local.resource_group_name}' -n '${azurerm_linux_web_app.backend.name}' --src-path binaries.zip \naz webapp restart --resource-group '${local.resource_group_name}' --name '${azurerm_linux_web_app.backend.name}'"
 }

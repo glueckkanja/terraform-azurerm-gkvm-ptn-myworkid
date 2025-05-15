@@ -1,50 +1,3 @@
-variable "location" {
-  type        = string
-  description = "Azure region where the resource should be deployed."
-  nullable    = false
-}
-
-variable "name" {
-  type        = string
-  description = "The name of the this resource."
-
-  validation {
-    condition     = can(regex("TODO", var.name))
-    error_message = "The name must be TODO." # TODO remove the example below once complete:
-    #condition     = can(regex("^[a-z0-9]{5,50}$", var.name))
-    #error_message = "The name must be between 5 and 50 characters long and can only contain lowercase letters and numbers."
-  }
-}
-
-# This is required for most resource modules
-variable "resource_group_name" {
-  type        = string
-  description = "The resource group where the resources will be deployed."
-}
-
-# required AVM interfaces
-# remove only if not supported by the resource
-# tflint-ignore: terraform_unused_declarations
-variable "customer_managed_key" {
-  type = object({
-    key_vault_resource_id = string
-    key_name              = string
-    key_version           = optional(string, null)
-    user_assigned_identity = optional(object({
-      resource_id = string
-    }), null)
-  })
-  default     = null
-  description = <<DESCRIPTION
-A map describing customer-managed keys to associate with the resource. This includes the following properties:
-- `key_vault_resource_id` - The resource ID of the Key Vault where the key is stored.
-- `key_name` - The name of the key.
-- `key_version` - (Optional) The version of the key. If not specified, the latest version is used.
-- `user_assigned_identity` - (Optional) An object representing a user-assigned identity with the following properties:
-  - `resource_id` - The resource ID of the user-assigned identity.
-DESCRIPTION  
-}
-
 variable "diagnostic_settings" {
   type = map(object({
     name                                     = optional(string, null)
@@ -120,86 +73,6 @@ DESCRIPTION
   }
 }
 
-# tflint-ignore: terraform_unused_declarations
-variable "managed_identities" {
-  type = object({
-    system_assigned            = optional(bool, false)
-    user_assigned_resource_ids = optional(set(string), [])
-  })
-  default     = {}
-  description = <<DESCRIPTION
-Controls the Managed Identity configuration on this resource. The following properties can be specified:
-
-- `system_assigned` - (Optional) Specifies if the System Assigned Managed Identity should be enabled.
-- `user_assigned_resource_ids` - (Optional) Specifies a list of User Assigned Managed Identity resource IDs to be assigned to this resource.
-DESCRIPTION
-  nullable    = false
-}
-
-variable "private_endpoints" {
-  type = map(object({
-    name = optional(string, null)
-    role_assignments = optional(map(object({
-      role_definition_id_or_name             = string
-      principal_id                           = string
-      description                            = optional(string, null)
-      skip_service_principal_aad_check       = optional(bool, false)
-      condition                              = optional(string, null)
-      condition_version                      = optional(string, null)
-      delegated_managed_identity_resource_id = optional(string, null)
-    })), {})
-    lock = optional(object({
-      kind = string
-      name = optional(string, null)
-    }), null)
-    tags                                    = optional(map(string), null)
-    subnet_resource_id                      = string
-    private_dns_zone_group_name             = optional(string, "default")
-    private_dns_zone_resource_ids           = optional(set(string), [])
-    application_security_group_associations = optional(map(string), {})
-    private_service_connection_name         = optional(string, null)
-    network_interface_name                  = optional(string, null)
-    location                                = optional(string, null)
-    resource_group_name                     = optional(string, null)
-    ip_configurations = optional(map(object({
-      name               = string
-      private_ip_address = string
-    })), {})
-  }))
-  default     = {}
-  description = <<DESCRIPTION
-A map of private endpoints to create on this resource. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-
-- `name` - (Optional) The name of the private endpoint. One will be generated if not set.
-- `role_assignments` - (Optional) A map of role assignments to create on the private endpoint. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time. See `var.role_assignments` for more information.
-- `lock` - (Optional) The lock level to apply to the private endpoint. Default is `None`. Possible values are `None`, `CanNotDelete`, and `ReadOnly`.
-- `tags` - (Optional) A mapping of tags to assign to the private endpoint.
-- `subnet_resource_id` - The resource ID of the subnet to deploy the private endpoint in.
-- `private_dns_zone_group_name` - (Optional) The name of the private DNS zone group. One will be generated if not set.
-- `private_dns_zone_resource_ids` - (Optional) A set of resource IDs of private DNS zones to associate with the private endpoint. If not set, no zone groups will be created and the private endpoint will not be associated with any private DNS zones. DNS records must be managed external to this module.
-- `application_security_group_resource_ids` - (Optional) A map of resource IDs of application security groups to associate with the private endpoint. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-- `private_service_connection_name` - (Optional) The name of the private service connection. One will be generated if not set.
-- `network_interface_name` - (Optional) The name of the network interface. One will be generated if not set.
-- `location` - (Optional) The Azure location where the resources will be deployed. Defaults to the location of the resource group.
-- `resource_group_name` - (Optional) The resource group where the resources will be deployed. Defaults to the resource group of this resource.
-- `ip_configurations` - (Optional) A map of IP configurations to create on the private endpoint. If not specified the platform will create one. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-  - `name` - The name of the IP configuration.
-  - `private_ip_address` - The private IP address of the IP configuration.
-DESCRIPTION
-  nullable    = false
-}
-
-# This variable is used to determine if the private_dns_zone_group block should be included,
-# or if it is to be managed externally, e.g. using Azure Policy.
-# https://github.com/Azure/terraform-azurerm-avm-res-keyvault-vault/issues/32
-# Alternatively you can use AzAPI, which does not have this issue.
-variable "private_endpoints_manage_dns_zone_group" {
-  type        = bool
-  default     = true
-  description = "Whether to manage private DNS zone groups with this module. If set to false, you must manage private DNS zone groups externally, e.g. using Azure Policy."
-  nullable    = false
-}
-
 variable "role_assignments" {
   type = map(object({
     role_definition_id_or_name             = string
@@ -232,3 +105,249 @@ variable "tags" {
   default     = null
   description = "(Optional) Tags of the resource."
 }
+
+# MyWorkID
+## General
+variable "tenant_id" {
+  type = string
+}
+
+variable "subscription_id" {
+  type = string
+}
+
+variable "create_resource_group" {
+  type        = bool
+  default     = true
+  description = "Create a new resource group for the resources. If set to false, the resource group must already exist and resource_group_name must be provided."
+}
+
+variable "resource_group_name" {
+  type    = string
+  default = "rg-MyWorkID"
+}
+
+variable "resource_location" {
+  type    = string
+  default = "westeurope"
+}
+
+variable "create_log_analytics_workspace" {
+  type        = bool
+  default     = true
+  description = "Create a new log analytics workspace for the resources. If set to false, the log analytics workspace must already exist and workspace_id must be provided."
+}
+
+variable "workspace_id" {
+  type    = string
+  default = "log-MyWorkID"
+}
+
+## Flags
+variable "api_name" {
+  type        = string
+  description = "Name of the AppService that hosts the api. Note this has to be globally unique."
+}
+
+variable "create_aad_objects" {
+  type        = bool
+  default     = true
+  description = "Create the AAD objects (App Registrations, Service Principals, etc.)"
+}
+
+variable "skip_actions_requiring_global_admin" {
+  description = "Skip actions that require global admin permissions. If set to true you will have to set some settings, like the permission grants, manually. NOTE: If this ever was set to false a change to true will result in the previously set permissions being removed."
+  type        = bool
+  default     = false
+}
+
+variable "allow_credential_operations_for_privileged_users" {
+  type        = bool
+  description = "Allow credential operations for privileged users. If set to true, users with privileged roles (e.g. Global Admin or User Admin) can perform credential operations like create TAP and reset password."
+  default     = false
+}
+
+## Service Plan
+variable "service_plan_os_type" {
+  type        = string
+  default     = "Linux"
+  description = "The OS type of the service plan."
+}
+
+variable "service_plan_sku" {
+  type        = string
+  default     = "B1"
+  description = "The SKU of the service plan."
+}
+
+## Application Insights
+variable "insights_sku" {
+  type        = string
+  default     = "PerGB2018"
+  description = "The SKU of the application insights."
+}
+
+variable "insights_retention" {
+  type        = number
+  default     = 30
+  description = "The retention period of the application insights."
+}
+
+variable "insights_type" {
+  type        = string
+  default     = "web"
+  description = "The type of the application insights."
+}
+
+## Web App
+variable "web_app_https_only" {
+  type        = bool
+  default     = true
+  description = "Enforce HTTPS for the web app."
+}
+
+variable "web_app_client_affinity_enabled" {
+  type        = bool
+  default     = false
+  description = "Enable client affinity for the web app."
+}
+
+## Web App App Settings
+variable "dismiss_user_risk_auth_context_id" {
+  type        = string
+  description = "AuthContext Id configured that is challenged for the dismissUser action."
+}
+
+variable "generate_tap_auth_context_id" {
+  type        = string
+  description = "AuthContext Id configured that is challenged for the generateTAP action."
+}
+
+variable "reset_password_auth_context_id" {
+  type        = string
+  description = "AuthContext Id configured that is challenged for the resetPassword action."
+}
+
+variable "enable_auto_update" {
+  type        = bool
+  description = "Decides wether the backend should be updated automatically. If set to false the backend will not be updated automatically. If set to true the backend will be updated automatically. NOTE: If this ever was set to false a change to true will result in the backend being recreated automatically."
+  default     = true
+}
+
+variable "verified_id_jwt_signing_key_secret_name" {
+  type        = string
+  description = "KeyVault secret name for the signing key of the jwt used int the verifiedId callbacks."
+  default     = "VerifiedId-JwtSigningKey"
+}
+variable "verified_id_decentralized_identifier_secret_name" {
+  type        = string
+  description = "KeyVault secret name for the Decentralized identifier of the tenant (https://learn.microsoft.com/en-us/entra/verified-id/verifiable-credentials-configure-verifier#gather-tenant-details-to-set-up-your-sample-application)."
+  default     = "VerifiedId-DecentralizedIdentifier"
+}
+variable "verified_id_verify_security_attribute_set" {
+  type        = string
+  description = "The name of the custom security attribute set where the last verified date should be stored."
+  default     = "MyWorkID"
+}
+variable "verified_id_verify_security_attribute" {
+  type        = string
+  description = "The name of the custom security attribute where the last verified date should be stored."
+  default     = "lastVerifiedFaceCheck"
+}
+
+variable "custom_domains" {
+  type        = list(string)
+  default     = []
+  description = "OPTIONAL: List of custom domains for MyWorkID. Must be configured at a later time. NOTE: If specified the VerifiedId callbacks will always use the first domain in the list."
+}
+
+## Key Vault
+variable "kv_soft_delete_retention_days" {
+  type        = number
+  default     = 7
+  description = "The number of days to retain soft-deleted secrets in the key vault."
+}
+
+variable "kv_purge_protection_enabled" {
+  type        = bool
+  default     = false
+  description = "Enable purge protection for the key vault. This setting is only available for key vaults with soft delete enabled."
+}
+
+variable "kv_sku_name" {
+  type        = string
+  default     = "standard"
+  description = "The SKU name of the key vault. Possible values are 'standard' and 'premium'."
+}
+
+## AppRegistrations
+variable "frontend_appreg_name" {
+  type        = string
+  default     = "ar-MyWorkID-frontend"
+  description = "Name of the AppRegistration that is used by the frontend."
+}
+
+variable "frontend_application_id" {
+  type        = string
+  default     = "MyWorkID-frontend-id"
+  description = "Application ID of the frontend AppRegistration. Required if create_aad_objects is set to false."
+}
+
+variable "frontend_service_principal_id" {
+  type        = string
+  default     = "MyWorkID-frontend-spn-id"
+  description = "Service Principal ID of the frontend AppRegistration. Required if create_aad_objects is set to false."
+}
+
+variable "backend_appreg_name" {
+  type        = string
+  default     = "ar-MyWorkID-backend"
+  description = "Name of the AppRegistration that is used by the backend."
+}
+
+variable "backend_application_id" {
+  type        = string
+  default     = "MyWorkID-backend-id"
+  description = "Application ID of the backend AppRegistration. Required if create_aad_objects is set to false."
+}
+
+variable "backend_service_principal_id" {
+  type        = string
+  default     = "MyWorkID-backend-spn-id"
+  description = "Service Principal ID of the backend AppRegistration. Required if create_aad_objects is set to false."
+}
+
+variable "backend_graph_permissions" {
+  type        = list(string)
+  default     = []
+  description = "List of permissions to assign to the backend AppRegistration."
+}
+
+## Backend Access Groups
+variable "backend_access_group_names" {
+  type = object({
+    create_tap        = optional(string, "sec - MyWorkID - Create TAP")
+    dismiss_user_risk = optional(string, "sec - MyWorkID - Dismiss User Risk")
+    password_reset    = optional(string, "sec - MyWorkID - Password Reset")
+    validate_identity = optional(string, "sec - MyWorkID - Validate Identity")
+  })
+  default     = {}
+  description = "Values for the backend access group names. Only relevant if skip_creation_backend_access_groups is set to false."
+}
+
+variable "skip_creation_backend_access_groups" {
+  type        = bool
+  description = "Value to determine if the backend access groups should be created automatically or if this action should be skipped."
+  default     = false
+}
+
+## Dev
+variable "is_dev" {
+  type    = bool
+  default = false
+}
+variable "dev_redirect_url" {
+  type    = set(string)
+  default = []
+}
+

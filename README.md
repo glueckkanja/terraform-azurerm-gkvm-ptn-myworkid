@@ -10,47 +10,102 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9, < 2.0)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.0)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.19)
 
 - <a name="requirement_modtm"></a> [modtm](#requirement\_modtm) (~> 0.3)
 
 - <a name="requirement_random"></a> [random](#requirement\_random) (~> 3.5)
+
+- <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) (~> 3.1)
+
+- <a name="requirement_time"></a> [time](#requirement\_time) (~> 0.12)
 
 ## Resources
 
 The following resources are used by this module:
 
 - [azurerm_management_lock.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_lock) (resource)
-- [azurerm_private_endpoint.this_managed_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.this_unmanaged_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint_application_security_group_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint_application_security_group_association) (resource)
-- [azurerm_resource_group.TODO](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 - [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) (resource)
 - [modtm_telemetry.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/resources/telemetry) (resource)
 - [random_uuid.telemetry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
 - [azurerm_client_config.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 - [modtm_module_source.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/data-sources/module_source) (data source)
+- [azurerm_resource_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_service_plan.backend](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/service_plan) (resource)
+- [azurerm_log_analytics_workspace.backend_application_insights](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/log_analytics_workspace) (resource)
+- [azurerm_application_insights.backend](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/application_insights) (resource)
+- [azurerm_linux_web_app.backend](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app) (resource)
+- [azurerm_key_vault.backend_secrets](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) (resource)
+- [azurerm_role_assignment.backend_key_vault_access](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azuread_app_role_assignment.backend_managed_identity](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/app_role_assignment) (resource)
+- [azuread_directory_role.authentication_administrator](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/directory_role) (resource)
+- [time_sleep.wait_30_seconds_after_user_assigned_identity_creation](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) (resource)
+- [azuread_directory_role_assignment.backend_managed_identity_authentication_administrator](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/directory_role_assignment) (resource)
+- [azuread_service_principal.verifiable_credentials_service_request](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) (resource)
+- [azuread_app_role_assignment.verifiable_credentials](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/app_role_assignment) (resource)
+- [azuread_service_principal_delegated_permission_grant.frontend_backend_access](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_delegated_permission_grant) (resource)
+- [azuread_application.backend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) (resource)
+- [azuread_service_principal.backend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) (resource)
+- [azuread_application_identifier_uri.backend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_identifier_uri) (resource)
+- [azuread_application_registration.frontend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_registration) (resource)
+- [azuread_application_api_access.frontend_backend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_api_access) (resource)
+- [azuread_application_api_access.frontend_graph](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_api_access) (resource)
+- [azuread_application_owner.frontend_current_user](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_owner) (resource)
+- [azuread_application_redirect_uris.frontend_backend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_redirect_uris) (resource)
+- [azuread_service_principal.frontend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) (resource)
+- [azuread_service_principal.msgraph](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) (resource)
+- [azuread_service_principal_delegated_permission_grant.frontend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_delegated_permission_grant) (resource)
+- [azuread_group.backend_access](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group) (resource)
+- [azuread_app_role_assignment.backend_access](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/app_role_assignment) (resource)
+- [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) (data source)
+- [azuread_service_principal.msgraph](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) (data source)
+- [azuread_client_config.current_user](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config) (data source)
+- [azuread_service_principal.frontend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) (data source)
+- [azuread_application.frontend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application) (data source)
+- [azuread_service_principal.backend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) (data source)
+- [azuread_application.backend](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application) (data source)
+- [azuread_group.backend_access](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group) (data source)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_location"></a> [location](#input\_location)
+### <a name="input_api_name"></a> [api_name](#input\_api_name)
 
-Description: Azure region where the resource should be deployed.
-
-Type: `string`
-
-### <a name="input_name"></a> [name](#input\_name)
-
-Description: The name of the this resource.
+Description: Name of the AppService that hosts the api. Note this has to be globally unique.
 
 Type: `string`
 
-### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 
-Description: The resource group where the resources will be deployed.
+### <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id)
+
+Description: The ID of the Tenant where the Entra Objects should be deployed.
+
+Type: `string`
+
+### <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id)
+
+Description: The ID of the Subscription where the Resources should be deployed.
+
+Type: `string`
+
+### <a name="input_dismiss_user_risk_auth_context_id"></a> [dismiss\_user\_risk\_auth\_context\_id](#input\_dismiss\_user\_risk\_auth\_context\_id)
+
+Description: AuthContext Id configured that is challenged for the dismissUser action.
+
+Type: `string`
+
+### <a name="input_generate_tap_auth_context_id"></a> [generate\_tap\_auth\_context\_id](#input\_generate\_tap\_auth\_context\_id)
+
+Description: AuthContext Id configured that is challenged for the generateTAP action.
+
+Type: `string`
+
+### <a name="input_reset_password_auth_context_id"></a> [reset\_password\_auth\_context\_id](#input\_reset\_password\_auth\_context\_id)
+
+Description: AuthContext Id configured that is challenged for the resetPassword action.
 
 Type: `string`
 
@@ -58,33 +113,301 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
-### <a name="input_customer_managed_key"></a> [customer\_managed\_key](#input\_customer\_managed\_key)
+### <a name="input_resource_location"></a> [resource_location](#input\_resource_location)
 
-Description: A map describing customer-managed keys to associate with the resource. This includes the following properties:
-- `key_vault_resource_id` - The resource ID of the Key Vault where the key is stored.
-- `key_name` - The name of the key.
-- `key_version` - (Optional) The version of the key. If not specified, the latest version is used.
-- `user_assigned_identity` - (Optional) An object representing a user-assigned identity with the following properties:
-  - `resource_id` - The resource ID of the user-assigned identity.
+Description: Azure region where the resource should be deployed.
+
+Type: `string`
+
+Default: `westeurope`
+
+### <a name="input_create_resource_group"></a> [create\_resource\_group](#input\_create\_resource\_group)
+
+Description: Whether the resource group should be created by the module or not.
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
+
+Description: The name of the resource group which will be created, if `create_resource_group` is set to true. The name of an existing resource group which should be used to deploy the resources, if `create_resource_group` is set to false. 
+
+Type: `string`
+
+Default: `rg-MyWorkID`
+
+### <a name="input_create_log_analytics_workspace"></a> [create\_log\_analytics\_workspace](#input\_create\_log\_analytics\_workspace)
+
+Description: Whether the log analytics workspace should be created by the module or not. 
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_workspace_id"></a> [workspace\_id](#input\_workspace\_id)
+
+Description: The ID of an existing log analytics workspace which should be used to monitor the resources, if `create_log_analytics_workspace` is set to false. 
+
+Type: `string`
+
+Default: `log-MyWorkID`
+
+### <a name="input_create_aad_objects"></a> [create\_aad\_objects](#input\_create\_aad\_objects)
+
+Description: Whether all Entra Objects should be created by the module or not. 
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_skip_actions_requiring_global_admin"></a> [skip\_actions\_requiring\_global\_admin](#input\_skip\_actions\_requiring\_global\_admin)
+
+Description: Skip actions that require global admin permissions. If set to true you will have to set some settings, like the permission grants, manually. NOTE: If this ever was set to false a change to true will result in the previously set permissions being removed. 
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_allow_credential_operations_for_privileged_users"></a> [allow\_credential\_operations\_for\_privileged\_users](#input\_allow\_credential\_operations\_for\_privileged\_users)
+
+Description: Allow credential operations for privileged users. If set to true, users with privileged roles (e.g. Global Admin or User Admin) can perform credential operations like create TAP and reset password.
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_service_plan_os_type"></a> [service\_plan\_os\_type](#input\_service\_plan\_os\_type)
+
+Description: The OS type of the service plan.
+
+Type: `string`
+
+Default: `Linux`
+
+### <a name="input_service_plan_sku"></a> [allow\_service\_plan\_sku](#input\_service\_plan\_sku)
+
+Description: The SKU of the service plan.
+
+Type: `string`
+
+Default: `B1`
+
+### <a name="input_insights_sku"></a> [insights\_sku](#input\_insights\_sku)
+
+Description: The SKU of the application insights.
+
+Type: `string`
+
+Default: `PerGB2018`
+
+### <a name="input_insights_retention"></a> [allow\_insights\_retention](#input\_insights\_retention)
+
+Description: The retention period of the application insights.
+
+Type: `number`
+
+Default: `30`
+
+### <a name="input_insights_type"></a> [allow\_insights\_type](#input\_insights\_type)
+
+Description: The type of the application insights.
+
+Type: `string`
+
+Default: `web`
+
+### <a name="input_web_app_https_only"></a> [web\_app\_https\_only](#input\_web\_app\_https\_only)
+
+Description: Enforce HTTPS for the web app.
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_web_app_client_affinity_enabled"></a> [web\_app\_client\_affinity\_enabled](#input\_web\_app\_client\_affinity\_enabled)
+
+Description: Enable client affinity for the web app.
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_enable_auto_update"></a> [enable\_auto\_update](#input\_enable\_auto\_update)
+
+Description: Decides wether the backend should be updated automatically. If set to false the backend will not be updated automatically. If set to true the backend will be updated automatically. NOTE: If this ever was set to false a change to true will result in the backend being recreated automatically.
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_verified_id_jwt_signing_key_secret_name"></a> [verified\_id\_jwt\_signing\_key\_secret\_name](#input\_verified\_id\_jwt\_signing\_key\_secret\_name)
+
+Description: KeyVault secret name for the signing key of the jwt used int the verifiedId callbacks.
+
+Type: `strinh`
+
+Default: `VerifiedId-JwtSigningKey`
+
+### <a name="input_verified_id_decentralized_identifier_secret_name"></a> [verified\_id\_decentralized\_identifier\_secret\_name](#input\_verified\_id\_decentralized\_identifier\_secret\_name)
+
+Description: KeyVault secret name for the Decentralized identifier of the tenant (https://learn.microsoft.com/en-us/entra/verified-id/verifiable-credentials-configure-verifier#gather-tenant-details-to-set-up-your-sample-application).
+
+Type: `string`
+
+Default: `VerifiedId-DecentralizedIdentifier`
+
+### <a name="input_verified_id_verify_security_attribute_set"></a> [verified\_id\_verify\_security\_attribute\_set](#input\_verified\_id\_verify\_security\_attribute\_set)
+
+Description: The name of the custom security attribute set where the last verified date should be stored.
+
+Type: `string`
+
+Default: `MyWorkID`
+
+### <a name="input_verified_id_verify_security_attribute"></a> [verified\_id\_verify\_security\_attribute](#input\_verified\_id\_verify\_security\_attribute)
+
+Description: The name of the custom security attribute where the last verified date should be stored.
+
+Type: `string`
+
+Default: `lastVerifiedFaceCheck`
+
+### <a name="input_custom_domains"></a> [custom\_domains](#input\_custom\_domains)
+
+Description: List of custom domains for MyWorkID. Must be configured at a later time. NOTE: If specified the VerifiedId callbacks will always use the first domain in the list.
+
+Type: `list(string)`
+
+Default: `[]`
+
+### <a name="input_kv_soft_delete_retention_days"></a> [kv\_soft\_delete\_retention\_days](#input\_kv\_soft\_delete\_retention\_days)
+
+Description: The number of days to retain soft-deleted secrets in the key vault.
+
+Type: `number`
+
+Default: `7`
+
+### <a name="input_kv_purge_protection_enabled"></a> [kv\_purge\_protection\_enabled](#input\_kv\_purge\_protection\_enabled)
+
+Description: Enable purge protection for the key vault. This setting is only available for key vaults with soft delete enabled.
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_kv_sku_name"></a> [kv\_sku\_name](#input\_kv\_sku\_name)
+
+Description: The SKU name of the key vault. Possible values are `standard` and `premium`.
+
+Type: `string`
+
+Default: `standard`
+
+### <a name="input_frontend_appreg_name"></a> [frontend\_appreg\_name](#input\_frontend\_appreg\_name)
+
+Description: Name of the AppRegistration that is used by the frontend.
+
+Type: `string`
+
+Default: `ar-MyWorkID-frontend`
+
+### <a name="input_frontend_application_id"></a> [frontend\_application\_id](#input\_frontend\_application\_id)
+
+Description: Application ID of the frontend AppRegistration. Required if `create_aad_objects` is set to false
+
+Type: `string`
+
+Default: `MyWorkID-frontend-id`
+
+### <a name="input_frontend_service_principal_id"></a> [frontend_service_principal_id](#input\_frontend_service_principal_id)
+
+Description: Service Principal ID of the frontend AppRegistration. Required if `create_aad_objects` is set to false.
+
+Type: `string`
+
+Default: `MyWorkID-frontend-spn-id`
+
+### <a name="input_backend_appreg_name"></a> [backend\_appreg\_name](#input\_backend\_appreg\_name)
+
+Description: Name of the AppRegistration that is used by the backend.
+
+Type: `string`
+
+Default: `ar-MyWorkID-backend`
+
+### <a name="input_backend_application_id"></a> [backend\_application\_id](#input\_backend\_application\_id)
+
+Description: Application ID of the backend AppRegistration. Required if `create_aad_objects` is set to false.
+
+Type: `string`
+
+Default: `MyWorkID-backend-id`
+
+### <a name="input_backend_service_principal_id"></a> [backend\_service\_principal\_id](#input\_backend\_service\_principal\_id)
+
+Description: Service Principal ID of the backend AppRegistration. Required if `create_aad_objects` is set to false.
+
+Type: `string`
+
+Default: `MyWorkID-backend-spn-id`
+
+### <a name="input_backend_graph_permissions"></a> [backend\_graph\_permissions](#input\_backend\_graph\_permissions)
+
+Description: List of permissions to assign to the backend AppRegistration..
+
+Type: `list(string)`
+
+Default: `[]`
+
+### <a name="input_skip_creation_backend_access_groups"></a> [skip\_creation\_backend\_access\_groups](#input\_skip\_creation\_backend\_access\_groups)
+
+Description: Value to determine if the backend access groups should be created automatically or if this action should be skipped.
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_backend_access_group_names"></a> [backend\_access\_group\_names](#input\_backend\_access\_group\_names)
+
+Description: Values for the backend access group names. Only relevant if `skip_creation_backend_access_groups` is set to false. This includes the following properties:
+
+- `create_tap` - (Optional)
+- `dismiss_user_risk` - (Optional)
+- `password_reset` - (Optional)
+- `validate_identity` - (Optional)
 
 Type:
 
 ```hcl
 object({
-    key_vault_resource_id = string
-    key_name              = string
-    key_version           = optional(string, null)
-    user_assigned_identity = optional(object({
-      resource_id = string
-    }), null)
-  })
+  create_tap        = optional(string, "sec - MyWorkID - Create TAP")
+  dismiss_user_risk = optional(string, "sec - MyWorkID - Dismiss User Risk")
+  password_reset    = optional(string, "sec - MyWorkID - Password Reset")
+  validate_identity = optional(string, "sec - MyWorkID - Validate Identity")
+})
 ```
 
-Default: `null`
+### <a name="input_is_dev"></a> [skip\_is\_dev](#input\_is\_dev)
+
+Description: Additional option to activate the dev-mode of the module.
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_dev_redirect_url"></a> [skip\_dev\_redirect\_url](#input\_dev\_redirect\_url)
+
+Description: List of Redirect URIs added to the frontend Application in case of dev-mode being activated.
+
+Type: `set(string)`
+
+Default: `[]`
 
 ### <a name="input_diagnostic_settings"></a> [diagnostic\_settings](#input\_diagnostic\_settings)
 
-Description: A map of diagnostic settings to create on the Key Vault. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
+Description: A map of diagnostic settings to create on the Web App. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
 
 - `name` - (Optional) The name of the diagnostic setting. One will be generated if not set, however this will not be unique if you want to create multiple diagnostic setting resources.
 - `log_categories` - (Optional) A set of log categories to send to the log analytics workspace. Defaults to `[]`.
@@ -144,88 +467,6 @@ object({
 
 Default: `null`
 
-### <a name="input_managed_identities"></a> [managed\_identities](#input\_managed\_identities)
-
-Description: Controls the Managed Identity configuration on this resource. The following properties can be specified:
-
-- `system_assigned` - (Optional) Specifies if the System Assigned Managed Identity should be enabled.
-- `user_assigned_resource_ids` - (Optional) Specifies a list of User Assigned Managed Identity resource IDs to be assigned to this resource.
-
-Type:
-
-```hcl
-object({
-    system_assigned            = optional(bool, false)
-    user_assigned_resource_ids = optional(set(string), [])
-  })
-```
-
-Default: `{}`
-
-### <a name="input_private_endpoints"></a> [private\_endpoints](#input\_private\_endpoints)
-
-Description: A map of private endpoints to create on this resource. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-
-- `name` - (Optional) The name of the private endpoint. One will be generated if not set.
-- `role_assignments` - (Optional) A map of role assignments to create on the private endpoint. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time. See `var.role_assignments` for more information.
-- `lock` - (Optional) The lock level to apply to the private endpoint. Default is `None`. Possible values are `None`, `CanNotDelete`, and `ReadOnly`.
-- `tags` - (Optional) A mapping of tags to assign to the private endpoint.
-- `subnet_resource_id` - The resource ID of the subnet to deploy the private endpoint in.
-- `private_dns_zone_group_name` - (Optional) The name of the private DNS zone group. One will be generated if not set.
-- `private_dns_zone_resource_ids` - (Optional) A set of resource IDs of private DNS zones to associate with the private endpoint. If not set, no zone groups will be created and the private endpoint will not be associated with any private DNS zones. DNS records must be managed external to this module.
-- `application_security_group_resource_ids` - (Optional) A map of resource IDs of application security groups to associate with the private endpoint. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-- `private_service_connection_name` - (Optional) The name of the private service connection. One will be generated if not set.
-- `network_interface_name` - (Optional) The name of the network interface. One will be generated if not set.
-- `location` - (Optional) The Azure location where the resources will be deployed. Defaults to the location of the resource group.
-- `resource_group_name` - (Optional) The resource group where the resources will be deployed. Defaults to the resource group of this resource.
-- `ip_configurations` - (Optional) A map of IP configurations to create on the private endpoint. If not specified the platform will create one. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-  - `name` - The name of the IP configuration.
-  - `private_ip_address` - The private IP address of the IP configuration.
-
-Type:
-
-```hcl
-map(object({
-    name = optional(string, null)
-    role_assignments = optional(map(object({
-      role_definition_id_or_name             = string
-      principal_id                           = string
-      description                            = optional(string, null)
-      skip_service_principal_aad_check       = optional(bool, false)
-      condition                              = optional(string, null)
-      condition_version                      = optional(string, null)
-      delegated_managed_identity_resource_id = optional(string, null)
-    })), {})
-    lock = optional(object({
-      kind = string
-      name = optional(string, null)
-    }), null)
-    tags                                    = optional(map(string), null)
-    subnet_resource_id                      = string
-    private_dns_zone_group_name             = optional(string, "default")
-    private_dns_zone_resource_ids           = optional(set(string), [])
-    application_security_group_associations = optional(map(string), {})
-    private_service_connection_name         = optional(string, null)
-    network_interface_name                  = optional(string, null)
-    location                                = optional(string, null)
-    resource_group_name                     = optional(string, null)
-    ip_configurations = optional(map(object({
-      name               = string
-      private_ip_address = string
-    })), {})
-  }))
-```
-
-Default: `{}`
-
-### <a name="input_private_endpoints_manage_dns_zone_group"></a> [private\_endpoints\_manage\_dns\_zone\_group](#input\_private\_endpoints\_manage\_dns\_zone\_group)
-
-Description: Whether to manage private DNS zone groups with this module. If set to false, you must manage private DNS zone groups externally, e.g. using Azure Policy.
-
-Type: `bool`
-
-Default: `true`
-
 ### <a name="input_role_assignments"></a> [role\_assignments](#input\_role\_assignments)
 
 Description: A map of role assignments to create on this resource. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
@@ -267,9 +508,9 @@ Default: `null`
 
 The following outputs are exported:
 
-### <a name="output_private_endpoints"></a> [private\_endpoints](#output\_private\_endpoints)
+### <a name="output_update_commands"></a> [update\_commands](#output\_update\_commands)
 
-Description:   A map of the private endpoints created.
+Description: The AZ CLI command to update the Web App.
 
 ## Modules
 
