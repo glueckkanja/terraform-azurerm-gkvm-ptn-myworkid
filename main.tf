@@ -1,10 +1,9 @@
 resource "azurerm_resource_group" "main" {
   count = var.create_resource_group ? 1 : 0
 
-  name     = var.resource_group_name
   location = local.resource_location
-
-  tags = var.tags
+  name     = var.resource_group_name
+  tags     = var.tags
 
   lifecycle {
     ignore_changes = [
@@ -15,13 +14,12 @@ resource "azurerm_resource_group" "main" {
 
 # Create app service plan for backend API
 resource "azurerm_service_plan" "backend" {
-  name                = "asp-${local.api_name}"
   location            = local.resource_location
-  resource_group_name = local.resource_group_name
+  name                = "asp-${local.api_name}"
   os_type             = local.service_plan_type
+  resource_group_name = local.resource_group_name
   sku_name            = local.service_plan_sku
-
-  tags = var.tags
+  tags                = var.tags
 
   lifecycle {
     ignore_changes = [
@@ -33,13 +31,12 @@ resource "azurerm_service_plan" "backend" {
 resource "azurerm_log_analytics_workspace" "backend_application_insights" {
   count = var.create_log_analytics_workspace ? 1 : 0
 
-  name                = "wsp-${local.api_name}"
   location            = local.resource_location
+  name                = "wsp-${local.api_name}"
   resource_group_name = local.resource_group_name
-  sku                 = local.insights_sku
   retention_in_days   = local.insights_retention
-
-  tags = var.tags
+  sku                 = local.insights_sku
+  tags                = var.tags
 
   lifecycle {
     ignore_changes = [
@@ -49,13 +46,12 @@ resource "azurerm_log_analytics_workspace" "backend_application_insights" {
 }
 
 resource "azurerm_application_insights" "backend" {
-  name                = "ai-${local.api_name}"
-  location            = local.resource_location
-  resource_group_name = local.resource_group_name
-  workspace_id        = local.workspace_id
   application_type    = local.insights_type
-
-  tags = var.tags
+  location            = local.resource_location
+  name                = "ai-${local.api_name}"
+  resource_group_name = local.resource_group_name
+  tags                = var.tags
+  workspace_id        = local.workspace_id
 
   lifecycle {
     ignore_changes = [
@@ -65,25 +61,10 @@ resource "azurerm_application_insights" "backend" {
 }
 
 resource "azurerm_linux_web_app" "backend" {
-  name                    = local.api_name
-  location                = local.resource_location
-  resource_group_name     = local.resource_group_name
-  service_plan_id         = azurerm_service_plan.backend.id
-  https_only              = local.web_app_https_only
-  client_affinity_enabled = local.web_app_client_affinity_enabled
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  site_config {
-    application_stack {
-      dotnet_version = "8.0"
-    }
-    minimum_tls_version = "1.2"
-    always_on           = true
-  }
-
+  location            = local.resource_location
+  name                = local.api_name
+  resource_group_name = local.resource_group_name
+  service_plan_id     = azurerm_service_plan.backend.id
   app_settings = {
     AppFunctions__DismissUserRisk              = local.dismiss_user_risk_auth_context_id
     AppFunctions__GenerateTap                  = local.generate_tap_auth_context_id
@@ -105,8 +86,21 @@ resource "azurerm_linux_web_app" "backend" {
     VerifiedId__BackendUrl                     = local.is_custom_domain_configured ? "https://${local.custom_domains[0]}" : "https://${local.api_name}.azurewebsites.net"
     VerifiedId__CreatePresentationRequestUri   = local.verified_id_create_presentation_request_uri
   }
+  client_affinity_enabled = local.web_app_client_affinity_enabled
+  https_only              = local.web_app_https_only
+  tags                    = var.tags
 
-  tags = var.tags
+  site_config {
+    always_on           = true
+    minimum_tls_version = "1.2"
+
+    application_stack {
+      dotnet_version = "8.0"
+    }
+  }
+  identity {
+    type = "SystemAssigned"
+  }
 
   lifecycle {
     ignore_changes = [
@@ -117,17 +111,16 @@ resource "azurerm_linux_web_app" "backend" {
 
 # Key vault
 resource "azurerm_key_vault" "backend_secrets" {
-  name                        = substr("kv-${local.api_name}", 0, 24)
   location                    = local.resource_location
+  name                        = substr("kv-${local.api_name}", 0, 24)
   resource_group_name         = local.resource_group_name
-  enabled_for_disk_encryption = true
-  tenant_id                   = local.tenant_id
-  soft_delete_retention_days  = local.kv_soft_delete_retention_days
-  purge_protection_enabled    = local.kv_purge_protection_enabled
-  enable_rbac_authorization   = true
   sku_name                    = local.kv_sku_name
-
-  tags = var.tags
+  tenant_id                   = local.tenant_id
+  enable_rbac_authorization   = true
+  enabled_for_disk_encryption = true
+  purge_protection_enabled    = local.kv_purge_protection_enabled
+  soft_delete_retention_days  = local.kv_soft_delete_retention_days
+  tags                        = var.tags
 
   lifecycle {
     ignore_changes = [
@@ -137,10 +130,11 @@ resource "azurerm_key_vault" "backend_secrets" {
 }
 
 resource "azurerm_role_assignment" "backend_key_vault_access" {
-  depends_on           = [time_sleep.wait_30_seconds_after_user_assigned_identity_creation]
+  principal_id         = azurerm_linux_web_app.backend.identity[0].principal_id
   scope                = azurerm_key_vault.backend_secrets.id
   role_definition_name = "Key Vault Secrets User"
-  principal_id         = azurerm_linux_web_app.backend.identity[0].principal_id
+
+  depends_on = [time_sleep.wait_30_seconds_after_user_assigned_identity_creation]
 }
 
 # AVM
