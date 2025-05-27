@@ -9,25 +9,25 @@ data "azuread_client_config" "current_user" {}
 data "azuread_application" "frontend" {
   count = local.create_aad_objects ? 0 : 1
 
-  object_id = var.frontend_application_id
+  object_id = var.frontend_application_object_id
 }
 
 data "azuread_service_principal" "frontend" {
   count = local.create_aad_objects ? 0 : 1
 
-  object_id = var.frontend_service_principal_id
+  object_id = var.frontend_service_principal_object_id
 }
 
 data "azuread_application" "backend" {
   count = local.create_aad_objects ? 0 : 1
 
-  object_id = var.backend_application_id
+  object_id = var.backend_application_object_id
 }
 
 data "azuread_service_principal" "backend" {
   count = local.create_aad_objects ? 0 : 1
 
-  object_id = var.backend_service_principal_id
+  object_id = var.backend_service_principal_object_id
 }
 
 data "azuread_group" "backend_access" {

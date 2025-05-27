@@ -29,10 +29,10 @@ module "myworkid" {
   tenant_id                                        = data.azurerm_client_config.current.tenant_id
   allow_credential_operations_for_privileged_users = var.allow_credential_operations_for_privileged_users
   backend_access_group_names                       = var.backend_access_group_names
-  backend_application_id                           = var.backend_application_id
+  backend_application_object_id                    = var.backend_application_object_id
   backend_appreg_name                              = var.backend_appreg_name
   backend_graph_permissions                        = var.backend_graph_permissions
-  backend_service_principal_id                     = var.backend_service_principal_id
+  backend_service_principal_object_id              = var.backend_service_principal_object_id
   create_aad_objects                               = var.create_aad_objects
   create_log_analytics_workspace                   = var.create_log_analytics_workspace
   create_resource_group                            = var.create_resource_group
@@ -41,9 +41,9 @@ module "myworkid" {
   diagnostic_settings                              = var.diagnostic_settings
   enable_auto_update                               = var.enable_auto_update
   enable_telemetry                                 = var.enable_telemetry
-  frontend_application_id                          = var.frontend_application_id
+  frontend_application_object_id                   = var.frontend_application_object_id
   frontend_appreg_name                             = var.frontend_appreg_name
-  frontend_service_principal_id                    = var.frontend_service_principal_id
+  frontend_service_principal_object_id             = var.frontend_service_principal_object_id
   insights_retention                               = var.insights_retention
   insights_sku                                     = var.insights_sku
   insights_type                                    = var.insights_type

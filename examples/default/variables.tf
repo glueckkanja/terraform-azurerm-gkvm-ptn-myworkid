@@ -44,10 +44,10 @@ variable "backend_access_group_names" {
   description = "Values for the backend access group names. Only relevant if skip_creation_backend_access_groups = false"
 }
 
-variable "backend_application_id" {
+variable "backend_application_object_id" {
   type        = string
   default     = "MyWorkID-backend-id"
-  description = "Application ID of the backend AppRegistration. Required if create_aad_objects is set to false."
+  description = "Object ID of the backend AppRegistration. Required if create_aad_objects is set to false."
 }
 
 variable "backend_appreg_name" {
@@ -62,10 +62,10 @@ variable "backend_graph_permissions" {
   description = "List of permissions to assign to the backend AppRegistration."
 }
 
-variable "backend_service_principal_id" {
+variable "backend_service_principal_object_id" {
   type        = string
   default     = "MyWorkID-backend-spn-id"
-  description = "Service Principal ID of the backend AppRegistration. Required if create_aad_objects is set to false."
+  description = "Service Principal Object ID of the backend AppRegistration. Required if create_aad_objects is set to false."
 }
 
 variable "create_aad_objects" {
@@ -159,10 +159,10 @@ DESCRIPTION
   nullable    = false
 }
 
-variable "frontend_application_id" {
+variable "frontend_application_object_id" {
   type        = string
   default     = "MyWorkID-frontend-id"
-  description = "Application ID of the frontend AppRegistration. Required if create_aad_objects is set to false."
+  description = "Object ID of the frontend AppRegistration. Required if create_aad_objects is set to false."
 }
 
 ## AppRegistrations
@@ -172,10 +172,10 @@ variable "frontend_appreg_name" {
   description = "Name of the AppRegistration that is used by the frontend"
 }
 
-variable "frontend_service_principal_id" {
+variable "frontend_service_principal_object_id" {
   type        = string
   default     = "MyWorkID-frontend-spn-id"
-  description = "Service Principal ID of the frontend AppRegistration. Required if create_aad_objects is set to false."
+  description = "Service Principal Object ID of the frontend AppRegistration. Required if create_aad_objects is set to false."
 }
 
 variable "insights_retention" {

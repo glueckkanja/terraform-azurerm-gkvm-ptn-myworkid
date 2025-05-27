@@ -1,7 +1,9 @@
 <!-- BEGIN_TF_DOCS -->
 # terraform-azurerm-avm-template
 
-This is a template repo for Terraform Azure Verified Modules.
+This is the Glueckkanja Verified Module for the Deployment of MyWorkID with Terraform.
+
+[Link to the Main MyWorkID Repository.](https://github.com/glueckkanja/MyWorkID)
 
 <!-- markdownlint-disable MD033 -->
 ## Requirements
@@ -137,9 +139,9 @@ object({
 
 Default: `{}`
 
-### <a name="input_backend_application_id"></a> [backend\_application\_id](#input\_backend\_application\_id)
+### <a name="input_backend_application_object_id"></a> [backend\_application\_object\_id](#input\_backend\_application\_object\_id)
 
-Description: Application ID of the backend AppRegistration. Required if create\_aad\_objects is set to false.
+Description: Object ID of the backend AppRegistration. Required if create\_aad\_objects is set to false.
 
 Type: `string`
 
@@ -161,9 +163,9 @@ Type: `list(string)`
 
 Default: `[]`
 
-### <a name="input_backend_service_principal_id"></a> [backend\_service\_principal\_id](#input\_backend\_service\_principal\_id)
+### <a name="input_backend_service_principal_object_id"></a> [backend\_service\_principal\_object\_id](#input\_backend\_service\_principal\_object\_id)
 
-Description: Service Principal ID of the backend AppRegistration. Required if create\_aad\_objects is set to false.
+Description: Service Principal Object ID of the backend AppRegistration. Required if create\_aad\_objects is set to false.
 
 Type: `string`
 
@@ -261,9 +263,9 @@ Type: `bool`
 
 Default: `true`
 
-### <a name="input_frontend_application_id"></a> [frontend\_application\_id](#input\_frontend\_application\_id)
+### <a name="input_frontend_application_object_id"></a> [frontend\_application\_object\_id](#input\_frontend\_application\_object\_id)
 
-Description: Application ID of the frontend AppRegistration. Required if create\_aad\_objects is set to false.
+Description: Object ID of the frontend AppRegistration. Required if create\_aad\_objects is set to false.
 
 Type: `string`
 
@@ -277,9 +279,9 @@ Type: `string`
 
 Default: `"ar-MyWorkID-frontend"`
 
-### <a name="input_frontend_service_principal_id"></a> [frontend\_service\_principal\_id](#input\_frontend\_service\_principal\_id)
+### <a name="input_frontend_service_principal_object_id"></a> [frontend\_service\_principal\_object\_id](#input\_frontend\_service\_principal\_object\_id)
 
-Description: Service Principal ID of the frontend AppRegistration. Required if create\_aad\_objects is set to false.
+Description: Service Principal Object ID of the frontend AppRegistration. Required if create\_aad\_objects is set to false.
 
 Type: `string`
 
