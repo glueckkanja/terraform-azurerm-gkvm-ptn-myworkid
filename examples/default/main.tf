@@ -19,7 +19,8 @@ provider "azurerm" {
 data "azurerm_client_config" "current" {}
 
 module "myworkid" {
-  source = "git::https://github.com/glueckkanja/terraform-azurerm-gkvm-ptn-myworkid.git?ref=v0.1.0"
+  source  = "glueckkanja/gkvm-ptn-myworkid/azurerm"
+  version = "0.1.0"
 
   api_name                                         = var.api_name
   dismiss_user_risk_auth_context_id                = var.dismiss_user_risk_auth_context_id
