@@ -1,5 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-# terraform-azurerm-avm-template
+# terraform-azurerm-gkvm-ptn-myworkid
 
 This is the Glueckkanja Verified Module for the Deployment of MyWorkID with Terraform.
 
