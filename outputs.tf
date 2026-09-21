@@ -1,6 +1,10 @@
 output "resource_id" {
-  description = "The ID of Linux Web App"
-  value       = azurerm_linux_web_app.backend
+  description = "The resource ID of the Linux Web App."
+  value       = azurerm_linux_web_app.backend.id
+
+  # The whole resource object was returned here previously, which exported
+  # sensitive attributes such as site_credential and is rejected outright by
+  # newer Terraform and OpenTofu.
 }
 
 output "update_commands" {
