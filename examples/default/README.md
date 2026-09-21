@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 # Default example
 
-This deploys the module in its default form. 
+This deploys the module in its default form.
 
 2 terraform.tfvars.tpl files are placed in the repository to give an example of an possible terraform.tfvars.
 
@@ -18,17 +18,21 @@ terraform {
 
 provider "azurerm" {
   resource_provider_registrations = "none"
-  tenant_id                       = data.azurerm_client_config.current.tenant_id
-  subscription_id                 = var.subscription_id
-  use_oidc                        = true
+  # tenant_id is intentionally not set here. Reading it from
+  # data.azurerm_client_config, which this very provider serves, makes the
+  # provider depend on itself and Terraform rejects the graph as a cycle.
+  # The provider picks the tenant up from ARM_TENANT_ID / the OIDC login.
+  subscription_id = var.subscription_id
+  use_oidc        = true
   features {}
 }
 
 data "azurerm_client_config" "current" {}
 
 module "myworkid" {
-  source  = "glueckkanja/gkvm-ptn-myworkid/azurerm"
-  version = "0.1.0"
+  # Points at this repository so CI validates the code under review. Pinning a
+  # published version here meant the example never exercised local changes.
+  source = "../../"
 
   api_name                                         = var.api_name
   dismiss_user_risk_auth_context_id                = var.dismiss_user_risk_auth_context_id
@@ -158,9 +162,9 @@ object({
 
 Default: `{}`
 
-### <a name="input_backend_application_id"></a> [backend\_application\_id](#input\_backend\_application\_id)
+### <a name="input_backend_application_object_id"></a> [backend\_application\_object\_id](#input\_backend\_application\_object\_id)
 
-Description: Application ID of the backend AppRegistration. Required if create\_aad\_objects is set to false.
+Description: Object ID of the backend AppRegistration. Required if create\_aad\_objects is set to false.
 
 Type: `string`
 
@@ -182,9 +186,9 @@ Type: `list(string)`
 
 Default: `[]`
 
-### <a name="input_backend_service_principal_id"></a> [backend\_service\_principal\_id](#input\_backend\_service\_principal\_id)
+### <a name="input_backend_service_principal_object_id"></a> [backend\_service\_principal\_object\_id](#input\_backend\_service\_principal\_object\_id)
 
-Description: Service Principal ID of the backend AppRegistration. Required if create\_aad\_objects is set to false.
+Description: Service Principal Object ID of the backend AppRegistration. Required if create\_aad\_objects is set to false.
 
 Type: `string`
 
@@ -282,9 +286,9 @@ Type: `bool`
 
 Default: `true`
 
-### <a name="input_frontend_application_id"></a> [frontend\_application\_id](#input\_frontend\_application\_id)
+### <a name="input_frontend_application_object_id"></a> [frontend\_application\_object\_id](#input\_frontend\_application\_object\_id)
 
-Description: Application ID of the frontend AppRegistration. Required if create\_aad\_objects is set to false.
+Description: Object ID of the frontend AppRegistration. Required if create\_aad\_objects is set to false.
 
 Type: `string`
 
@@ -298,9 +302,9 @@ Type: `string`
 
 Default: `"ar-MyWorkID-frontend"`
 
-### <a name="input_frontend_service_principal_id"></a> [frontend\_service\_principal\_id](#input\_frontend\_service\_principal\_id)
+### <a name="input_frontend_service_principal_object_id"></a> [frontend\_service\_principal\_object\_id](#input\_frontend\_service\_principal\_object\_id)
 
-Description: Service Principal ID of the frontend AppRegistration. Required if create\_aad\_objects is set to false.
+Description: Service Principal Object ID of the frontend AppRegistration. Required if create\_aad\_objects is set to false.
 
 Type: `string`
 
@@ -531,9 +535,9 @@ The following Modules are called:
 
 ### <a name="module_myworkid"></a> [myworkid](#module\_myworkid)
 
-Source: git::https://github.com/glueckkanja/terraform-azurerm-gkvm-ptn-myworkid.git
+Source: ../../
 
-Version: v0.1.0
+Version:
 
 <!-- markdownlint-disable-next-line MD041 -->
 ## Data Collection

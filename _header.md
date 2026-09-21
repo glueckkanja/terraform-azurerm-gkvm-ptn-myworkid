@@ -1,3 +1,5 @@
-# terraform-azurerm-avm-template
+# terraform-azurerm-gkvm-ptn-myworkid
 
-This is a template repo for Terraform Azure Verified Modules.
+This is the Glueckkanja Verified Module for the Deployment of MyWorkID with Terraform.
+
+[Link to the Main MyWorkID Repository.](https://github.com/glueckkanja/MyWorkID)
