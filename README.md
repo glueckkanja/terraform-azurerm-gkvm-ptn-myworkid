@@ -509,7 +509,7 @@ The following outputs are exported:
 
 ### <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id)
 
-Description: The ID of Linux Web App
+Description: The resource ID of the Linux Web App.
 
 ### <a name="output_update_commands"></a> [update\_commands](#output\_update\_commands)
 

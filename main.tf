@@ -116,7 +116,7 @@ resource "azurerm_key_vault" "backend_secrets" {
   resource_group_name         = local.resource_group_name
   sku_name                    = local.kv_sku_name
   tenant_id                   = local.tenant_id
-  enable_rbac_authorization   = true
+  rbac_authorization_enabled  = true
   enabled_for_disk_encryption = true
   purge_protection_enabled    = local.kv_purge_protection_enabled
   soft_delete_retention_days  = local.kv_soft_delete_retention_days
